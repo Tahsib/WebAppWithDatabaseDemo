@@ -21,6 +21,16 @@ steps:
     command: restore
     projects: '**/WebApp.csproj'
 
+- task: PowerShell@2
+  inputs:
+    filePath: 'sonar-add-project-guid.ps1'
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonar-connect'
+    organization: 'tahsib-key'
+    scannerMode: 'MSBuild'
+    projectKey: 'tahsibahad_DemoProject'
+
 - task: DotNetCoreCLI@2
   displayName: Build Web App
   inputs:
@@ -42,6 +52,10 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     zipAfterPublish: True
 
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact (WebApp.zip)'
   inputs:
