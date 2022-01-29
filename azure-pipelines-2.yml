@@ -41,9 +41,10 @@ jobs:
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis on SonarCloud'
     inputs:
-      SonarCloud: SonarCloud
-      organization: houssemdellai
-      projectKey: WebAppWithDatabaseDemo
+      SonarCloud: 'sonar-connect'
+      organization: 'tahsib-key'
+      scannerMode: 'MSBuild'
+      projectKey: 'tahsibahad_DemoProject'
   
   - task: DotNetCoreCLI@2
     displayName: Build
